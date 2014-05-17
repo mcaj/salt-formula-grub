@@ -1,0 +1,10 @@
+{% load_yaml as rawmap %}
+Debian:
+  pkgs:
+    - grub-common
+  config:
+    manage: []
+    default_config:
+      path: /etc/default/grub
+  update_grub_cmd: /usr/sbin/update-grub
+{% endload %}
