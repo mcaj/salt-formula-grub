@@ -65,4 +65,4 @@ OS Compatibility
 
 Tested with:
 
-* GNU/ Linux Debian Wheezy 7.5
+ GNU/ Linux Debian Wheezy
