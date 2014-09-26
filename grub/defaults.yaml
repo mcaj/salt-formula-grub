@@ -7,4 +7,12 @@ Debian:
     default_config:
       path: /etc/default/grub
   update_grub_cmd: /usr/sbin/update-grub
+RedHat:
+  pkgs:
+    - grub
+  config:
+    manage: []
+    default_config:
+      path: /etc/sysconfig/grub
+  update_grub_cmd: /usr/sbin/update-grub
 {% endload %}
