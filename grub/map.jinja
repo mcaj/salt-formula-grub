@@ -1,16 +1,17 @@
 {% import_yaml 'grub/defaults.yaml' as default_settings %}
 
-{% set os_family_map = salt['grains.filter_by']({
-    'RedHat': {
+{% set os_map = salt['grains.filter_by']({
+    'Fedora': {
       'pkgs': [ 'grub2-tools-efi' ],
     },
-  }, grain='os', merge=default_settings.grub.lookup) %}
-
-{% set os_map = salt['grains.filter_by']({
     'CentOS': {
       'pkgs': [ 'grub2-efi-x64', 'grub2-tools-extra' ],
     },
-  }, grain='os', merge=os_family_map.grub.lookup) %}
+  }, grain='os', merge=salt['pillar.get']('grub:lookup')) %}
+
+{% do default_settings.grub.update(os_family_map) %}
 
 {% set grub_settings = salt['pillar.get'](
-    'grub', default=os_map.grub, merge=True) %}
+    'grub',
+    default=default_settings.grub,
+    merge=True) %}
