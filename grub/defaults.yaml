@@ -10,4 +10,4 @@ grub:
   superuser_pbkdf2: ''
   config:
     changes:
-      BLAH: "test1234"
+      GRUB_TIMEOUT: 5
