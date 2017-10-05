@@ -1,8 +1,0 @@
-name: saltstack-grub-formula
-source: https://github.com/bechtoldt/saltstack-grub-formula
-summary: SaltStack Formula to set up and configure Grub, a Multiboot boot loader
-todo:
-  - add instructions how to use formhelper, add information about it in the formula-docs (dependency), show up alternative?
-  - 'table/ matrix: os/salt compatibility (dedicated file)'
-  - add list of available states
-  - add tests
