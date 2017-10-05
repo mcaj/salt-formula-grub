@@ -15,6 +15,8 @@ update-grub-config:
 {% for name, value in grub_settings.config.changes.items() %}
       - set {{ name }} {{ value }}
 {% endfor %}
+    - require:
+      - pkg: grub
 {% endif %}
 
 {% if 'superuser' in grub_settings and grub_settings.superuser != '' and 'superuser_pbkdf2' in grub_settings and grub_settings.superuser_pbkdf2 != '' %}
@@ -30,12 +32,12 @@ update-grub-config:
       superuser_pbkdf2: {{ grub_settings.superuser_pbkdf2 }}
     - require:
       - pkg: grub
+    - watch_in:
+      - cmd: grub-mkconfig
+{% endif %}
 
 grub-mkconfig:
   cmd.run:
     - name: {{ grub_settings.lookup.update_grub_cmd }}
     - watch:
       - augeas: update-grub-config
-      - file: /etc/grub.d/99_salt
-
-{% endif %}
