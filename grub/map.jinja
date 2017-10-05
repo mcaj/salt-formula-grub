@@ -9,7 +9,7 @@
     },
   }, grain='os', merge=salt['pillar.get']('grub:lookup')) %}
 
-{% do default_settings.grub.update(os_family_map) %}
+{% do default_settings.grub.update(os_map) %}
 
 {% set grub_settings = salt['pillar.get'](
     'grub',
