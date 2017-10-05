@@ -4,7 +4,7 @@
     'RedHat': {
       'pkgs': [ 'grub2-tools', 'grub2-tools-efi', 'grub2-tools-extra', 'grubby' ],
     },
-  }, grain='os', merge=salt['pillar.get']('grub:lookup')) %}
+  }, grain='os', merge=default_settings) %}
 
 {% set os_map = salt['grains.filter_by']({
     'Fedora': {
@@ -12,11 +12,9 @@
     },
   }, grain='os', merge=os_family_map) %}
 
-{% do default_settings.grub.update(os_map) %}
-
 {% set grub_settings = salt['pillar.get'](
     'grub',
-    default=default_settings.grub,
+    default=os_map,
     merge=True
   )
 %}
