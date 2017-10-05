@@ -2,15 +2,15 @@
 
 {% set os_family_map = salt['grains.filter_by']({
     'RedHat': {
-      'pkgs': [ 'grub2-tools', 'grub2-tools-efi', 'grub2-tools-extra', 'grubby' ],
+      'pkgs': [ 'grub2-tools-efi' ],
     },
-  }, grain='os', merge=default_settings.lookup) %}
+  }, grain='os', merge=default_settings.grub.lookup) %}
 
 {% set os_map = salt['grains.filter_by']({
-    'Fedora': {
-      'pkgs': [ 'grub2-tools', 'grubby' ],
+    'CentOS': {
+      'pkgs': [ 'grub2-efi-x64', 'grub2-tools-extra' ],
     },
-  }, grain='os', merge=os_family_map.lookup) %}
+  }, grain='os', merge=os_family_map.grub.lookup) %}
 
 {% set grub_settings = salt['pillar.get'](
-    'grub', default=os_map, merge=True) %}
+    'grub', default=os_map.grub, merge=True) %}
