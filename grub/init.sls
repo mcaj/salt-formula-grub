@@ -31,12 +31,11 @@ update-grub-config:
     - require:
       - pkg: grub
 
-# TODO: grub2-mkconfig
-#grub-mkconfig:
-#  cmd.run:
-#    - name: {{ grub_settings.lookup.update_grub_cmd }}
-#    - watch:
-#      - augeas: update-grub-config
-#      - file: /etc/grub.d/99_salt
+grub-mkconfig:
+  cmd.run:
+    - name: {{ grub_settings.lookup.update_grub_cmd }}
+    - watch:
+      - augeas: update-grub-config
+      - file: /etc/grub.d/99_salt
 
 {% endif %}
