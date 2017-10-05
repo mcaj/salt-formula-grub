@@ -1,12 +1,10 @@
 grub:
   lookup:
-    config:
-      manage:
-        - default_config
-  default_config:
-    content: |
-      GRUB_DEFAULT=0
-      GRUB_TIMEOUT=5
-      GRUB_DISTRIBUTOR=`lsb_release -i -s 2> /dev/null || echo Debian`
-      GRUB_CMDLINE_LINUX_DEFAULT="quiet"
-      GRUB_CMDLINE_LINUX="intremap=no_x2apic_optout"
+    pkgs:
+      - grub2-efi
+      - grub2-tools
+      - grub2-tools-efi
+    config_file: /etc/default/grub
+    custom_file: /etc/grub.d/99_salt
+  superuser: root
+  superuser_pbkdf2: grub.pbkdf2.sha512.10000.FE4ED097B784A79334EFC207F182ABBB8346C3B9691CF198B0E1F8E9A13F52EA542D15330BB49FF6886AA3A38EE87B7669F93700BC4DADC6F5C5CE2216B211FD.D0368552C6F9CB1627DAF85A998249FB9FDCB73592210BF5232AF8C0402820847FAFE7825CA5B1B90C07E34BF866AD7390A33384F4AE649160767322AC98CFB0

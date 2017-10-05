@@ -1,0 +1,8 @@
+#!/bin/sh -e
+cat << EOF
+{% if superuser != '' and superuser_pbkdf2 != '' %}
+set superusers="{{ superuser }}"
+export superusers
+password_pbkdf2 {{ superuser }} {{ superuser_pbkdf2 }}
+{% endif %}
+EOF
