@@ -6,18 +6,18 @@ grub:
   pkg.installed:
     - pkgs: {{ grub_settings.lookup.pkgs }}
 
-{% if grub_settings.config.changes %}
+{% if 'config_file' in grub_settings.lookup and 'changes' in grub_settings.config %}
 update-grub-config:
   augeas.change:
     - context: /files{{ grub_settings.lookup.config_file }}
     - lens: shellvars
     - changes:
-{% for name, value in grub_settings.config.get('changes', {}).items() %}
+{% for name, value in grub_settings.config.changes.items() %}
       - set {{ name }} {{ value }}
 {% endfor %}
 {% endif %}
 
-{% if grub_settings.superuser != '' and grub_settings.superuser_pbkdf2 != '' %}
+{% if 'superuser' in grub_settings and grub_settings.superuser != '' and 'superuser_pbkdf2' in grub_settings and grub_settings.superuser_pbkdf2 != '' %}
 /etc/grub.d/99_salt:
   file.managed:
     - source: salt://grub/files/99_salt
