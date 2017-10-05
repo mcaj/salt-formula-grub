@@ -4,9 +4,18 @@
 
 grub:
   pkg.installed:
-    - pkgs: {{ grub_settings.pkgs }}
+    - pkgs: {{ grub_settings.lookup.pkgs }}
 
-# TODO: Manage /etc/default/grub
+{% if grub_settings.config.changes %}
+update-grub-config:
+  augeas.change:
+    - context: /files{{ grub_settings.lookup.config_file }}
+    - lens: shellvars
+    - changes:
+{% for name, value in grub_settings.config.get('changes', {}).items() %}
+      - set {{ name }} {{ value }}
+{% endfor %}
+{% endif %}
 
 {% if grub_settings.superuser != '' and grub_settings.superuser_pbkdf2 != '' %}
 /etc/grub.d/99_salt:

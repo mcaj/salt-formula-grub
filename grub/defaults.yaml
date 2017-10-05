@@ -9,3 +9,6 @@ grub:
     update_grub_cmd: test -f /etc/grub2.cfg && grub2-mkconfig -o /etc/grub2.cfg || test -f /etc/grub2-efi.cfg && grub2-mkconfig -o /etc/grub2-efi.cfg
   superuser: ''
   superuser_pbkdf2: ''
+  config:
+    changes:
+      BLAH: "test1234"
