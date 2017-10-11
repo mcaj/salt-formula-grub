@@ -1,3 +1,37 @@
+{% load_yaml as rawmap %}
+Debian:
+  pkgs:
+    - grub-common
+  config:
+    manage: []
+    default_config:
+      path: /etc/default/grub
+  update_grub_cmd: /usr/sbin/update-grub
+RedHat:
+  pkgs:
+    - grub
+  config:
+    manage: []
+    default_config:
+      path: /etc/sysconfig/grub
+  update_grub_cmd: /usr/sbin/update-grub
+Suse:
+  pkgs:
+    - grub2
+    - grub2-i386-pc
+    - grub2-systemd-sleep-plugin
+  config:
+    manage: []
+    default_config:
+      path: /etc/default/grub
+  update_grub_cmd: /usr/sbin/grub2-mkconfig -o /boot/grub2/grub.cfg
+{% endload %}
+
+#TODO:
+#add openSUSE
+#add support for grub2-x86_64-efi and grub2-x86_64-xen
+
+#This is from and for only one OS 
 grub:
   lookup:
     pkgs:
