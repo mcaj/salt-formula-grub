@@ -28,7 +28,7 @@ grub-mkconfig:
 serial-getty:
   file.append:
    - name: /etc/securetty
-   - test: 
+   - text: 
        - ttyS0
   file.copy:
    - name: /etc/systemd/system/serial-getty@ttyS0.service
