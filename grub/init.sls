@@ -24,3 +24,15 @@ grub-mkconfig:
     - name: {{ grub_settings.lookup.update_grub_cmd }}
     - watch:
       - augeas: update-grub-config
+
+serial-getty:
+  file.append:
+   - name: /etc/securetty
+   - test: 
+       - ttyS0
+  file.copy:
+   - name: /etc/systemd/system/serial-getty@ttyS0.service
+   - source: /usr/lib/systemd/system/serial-getty@.service
+  service.systemctl_reload:
+  service.running:
+    - enable: True
