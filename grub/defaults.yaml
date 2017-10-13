@@ -2,14 +2,11 @@ grub:
   lookup:
     pkgs:
       - grub2
-      - grubby
-    config_file: /etc/default/grub
-    update_grub_cmd: test -f /etc/grub2.cfg && grub2-mkconfig -o /etc/grub2.cfg || test -f /etc/grub2-efi.cfg && grub2-mkconfig -o /etc/grub2-efi.cfg
+    default_grub: /etc/default/grub
+    grub_config: /boot/grub2/grub.cfg 
   config:
     changes:
       GRUB_TIMEOUT: 2
-      GRUB_SERIAL_COMMAND: "serial --unit=0 --speed=115200" 
+      GRUB_SERIAL_COMMAND: "serial --unit=0 --speed=115200"
       GRUB_CMDLINE_LINUX_DEFAULT: "splash=silent quiet showopts elevator=noop console=tty0 console=ttyS0,115200n8 vga=788" 
       GRUB_CMDLINE_LINUX_RECOVERY: "showopts apm=off noresume edd=off powersaved=off nohz=off highres=off processor.max_cstate=1 nomodeset x11failsafe console=tty0 console=ttyS0,115200n8" 
-
-
