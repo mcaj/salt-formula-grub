@@ -6,14 +6,14 @@ grub:
   pkg.installed:
     - pkgs: {{ grub_settings.lookup.pkgs }}
 
-{% if 'config_file' in grub_settings.lookup and 'changes' in grub_settings.config %}
+{% if 'default_grub' in grub_settings.lookup and 'changes' in grub_settings.config %}
 update-grub-config:
   augeas.change:
-    - context: /files{{ grub_settings.lookup.config_file }}
-    - lens: shellvars
+    - context: /files{{ grub_settings.lookup.default_grub }}
+    - lens: shellvars.lns
     - changes:
 {% for name, value in grub_settings.config.changes.items() %}
-      - set {{ name }} {{ value }}
+      - set {{ name }} "{{ value }}"
 {% endfor %}
     - require:
       - pkg: grub
@@ -21,18 +21,16 @@ update-grub-config:
 
 grub-mkconfig:
   cmd.run:
-    - name: {{ grub_settings.lookup.update_grub_cmd }}
+    - name: test -f {{ grub_settings.lookup.grub_config }}  && grub2-mkconfig -o {{ grub_settings.lookup.grub_config }}
     - watch:
       - augeas: update-grub-config
 
 serial-getty:
   file.append:
-   - name: /etc/securetty
-   - text: 
+    - name: /etc/securetty
+    - text:
        - ttyS0
-  file.copy:
-   - name: /etc/systemd/system/serial-getty@ttyS0.service
-   - source: /usr/lib/systemd/system/serial-getty@.service
-  service.systemctl_reload:
+
+serial-getty@ttyS0:
   service.running:
     - enable: True
